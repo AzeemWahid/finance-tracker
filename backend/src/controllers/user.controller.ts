@@ -15,17 +15,19 @@ export const getAllUsers = async (
     const limit = parseInt(req.query.limit as string) || 10;
     const offset = (page - 1) * limit;
 
-    const result = await pool.query(
-      'SELECT * FROM sp_get_all_users($1, $2)',
-      [limit, offset]
-    );
+    const result = await pool.query('SELECT * FROM sp_get_all_users($1, $2)', [
+      limit,
+      offset,
+    ]);
 
     const users = result.rows;
     const total = users.length > 0 ? parseInt(users[0].total_count) : 0;
     const totalPages = Math.ceil(total / limit);
 
     // Remove total_count from each user object
-    const cleanedUsers = users.map(({ total_count, ...user }) => user);
+    const cleanedUsers = users.map(
+      ({ total_count: _total_count, ...user }) => user
+    );
 
     const response: PaginatedResponse<User> = {
       success: true,

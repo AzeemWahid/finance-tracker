@@ -25,9 +25,7 @@ export const register = async (
     const { email, username, password }: CreateUserInput = req.body;
 
     // Check if email already exists
-    const emailExists = await pool.query('SELECT sp_email_exists($1)', [
-      email,
-    ]);
+    const emailExists = await pool.query('SELECT sp_email_exists($1)', [email]);
     if (emailExists.rows[0].sp_email_exists) {
       throw new AppError('Email already registered', 409);
     }
@@ -103,7 +101,8 @@ export const login = async (
     }
 
     // Remove password hash from response
-    const { password_hash, ...user } = userWithPassword;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password_hash: _password_hash, ...user } = userWithPassword;
 
     // Generate tokens
     const tokens = generateTokens({

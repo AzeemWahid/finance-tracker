@@ -6,10 +6,7 @@ import dotenv from 'dotenv';
 import { config } from './config/env';
 import pool from './config/database';
 import routes from './routes';
-import {
-  errorHandler,
-  notFoundHandler,
-} from './middleware/error.middleware';
+import { errorHandler, notFoundHandler } from './middleware/error.middleware';
 
 // Load environment variables
 dotenv.config();
@@ -54,7 +51,9 @@ const startServer = async () => {
     app.listen(config.port, () => {
       console.log(`✓ Server running on port ${config.port}`);
       console.log(`✓ Environment: ${config.nodeEnv}`);
-      console.log(`✓ API available at http://localhost:${config.port}${config.apiPrefix}`);
+      console.log(
+        `✓ API available at http://localhost:${config.port}${config.apiPrefix}`
+      );
     });
   } catch (error) {
     console.error('✗ Failed to start server:', error);
