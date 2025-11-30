@@ -1,0 +1,32 @@
+# Deployment Workflow (Commented - Enable when ready to deploy)
+#
+# This workflow deploys to your VM when you push to main
+# To enable:
+#   1. Rename this file from .template to .yml
+#   2. Add GitHub secrets: VM_HOST, VM_USER, VM_SSH_KEY
+#   3. Uncomment the workflow below
+#   4. Push to main branch
+
+# name: Deploy Frontend to Production
+#
+# on:
+#   push:
+#     branches: [main]
+#     paths:
+#       - 'frontend/**'
+#       - '.github/workflows/frontend-deploy.yml'
+#
+# jobs:
+#   deploy-frontend:
+#     runs-on: ubuntu-latest
+#
+#     steps:
+#       - name: Deploy Frontend to VM
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.VM_HOST }}
+#           username: ${{ secrets.VM_USER }}
+#           key: ${{ secrets.VM_SSH_KEY }}
+#           script: |
+#             cd ~/deployment/frontend
+#             ./deploy.sh
